@@ -420,7 +420,8 @@ html.dark .searchButton {
 
 /* Fix to darker SVG's on tables (might mess up some icons, but the content itself should be okay) */
 @media screen {
-  td .mw-file-element {
+	.infobox-full-data .mw-file-element,
+  .wikitable .mw-file-element {
     filter: invert(1);
   }
 }
