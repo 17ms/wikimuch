@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        WikiMuch
+// @name        WikiMuchCustom
 // @namespace   https://greasyfork.org
 // @description Clean and minimal theme for new Wikipedia. Press F8 for dark mode.
-// @author      Guillaume
+// @author      Guillaume, forked by 17ms
 // @version     3.3.5
 // @downloadURL https://codeberg.org/ltguillaume/wikimuch/raw/main/wikimuch.user.js
 // @icon        https://codeberg.org/ltguillaume/wikimuch/raw/main/logo.png
@@ -14,42 +14,45 @@
 // @run-at      document-start
 // ==/UserScript==
 
-document.addEventListener('DOMContentLoaded', function() {
-	if (document.body.classList.contains('skin-vector-legacy'))
-		document.location.search += '&useskin=vector-2022';
+document.addEventListener("DOMContentLoaded", function () {
+  if (document.body.classList.contains("skin-vector-legacy"))
+    document.location.search += "&useskin=vector-2022"
 
-	darkMode();
-	GM_addStyle(`
-
+  darkMode()
+  GM_addStyle(`
 /* Light theme */
 :root {
-	--nav-bg:        #f1f1f1;
-	--nav-text:      #333;
-	--link-text:     #067bad;
-	--main-bg:       #fafafa;
-	--main-text:     #444;
-	--main-border:   #bbb;
-	--box-bg:        #f7f7f7;
-	--box-bg2:       #fafafa;
-	--box-head-bg:   #e7e7e7;
-	--box-text:      #333;
-	--box-border:    #e7e7e7;
-	--navbox-border: #fdfdfd;
+	--nav-bg:        				 #f1f1f1;
+	--nav-text:      				 #333;
+	--link-text:     				 #067bad;
+	--main-bg:       				 #fafafa;
+	--main-text:     				 #444;
+	--main-border:   				 #bbb;
+	--box-bg:        				 #f7f7f7;
+	--box-bg2:       				 #fafafa;
+	--box-head-bg:   				 #e7e7e7;
+	--box-text:      				 #333;
+	--box-border:    				 #e7e7e7;
+	--navbox-border: 				 #fdfdfd;
+	--background-color-base: #fff;
 }
 
 /* Dark theme */
 :root.dark {
-	--nav-bg:        #111110;
-	--nav-text:      #888;
-	--link-text:     #6b6b5f;
-	--main-bg:       #10100f;
-	--main-text:     #999;
-	--main-border:   #1c1c1b;
-	--box-bg:        #111110;
-	--box-head-bg:   #1c1c1b;
-	--box-text:      #888;
-	--box-border:    #1c1c1b;
-	--navbox-border: #111110;
+	--nav-bg:        				 #111110;
+	--nav-text:      				 #888;
+	--link-text:     				 #067bad;
+	--main-bg:       				 #10100f;
+	--main-text:     				 #999;
+	--main-border:   				 #1c1c1b;
+	--box-bg:        				 #111110;
+	--box-bg2:       				 #10100f;
+	--box-head-bg:   				 #1c1c1b;
+	--box-text:      				 #888;
+	--code-bg:			 				 #1c1c1b;
+	--box-border:    				 #1c1c1b;
+	--navbox-border: 				 #111110;
+	--background-color-base: #10100f;
 }
 
 /* Main page container */
@@ -82,6 +85,7 @@ a:hover,
 .vector-pinnable-header-toggle-button:hover,
 .vector-menu-tabs .mw-list-item a,
 .mw-parser-output a.extiw, .mw-parser-output a.external {
+	background-color: var(--background-color-base) !important;
 	color: var(--link-text) !important;
 }
 
@@ -93,6 +97,12 @@ a:hover,
 
 #vector-main-menu-dropdown {
 	margin-left: 6px;
+}
+
+@media screen {
+	.vector-dropdown .vector-dropdown-content {
+		background-color: var(--main-border) !important;
+	}
 }
 
 .mw-header,
@@ -119,7 +129,6 @@ a:hover,
 		width: unset !important;
 	}
 
-
 /* TOC background and content padding for pages without a TOC */
 .vector-feature-page-tools-disabled #mw-sidebar-checkbox:not(:checked) ~ .vector-sidebar-container-no-toc ~ #mw-panel-toc,
 .vector-feature-page-tools-disabled .vector-toc-unpinned #mw-sidebar-checkbox:not(:checked) ~ #mw-panel-toc,
@@ -141,11 +150,18 @@ body.mw-special-Search main {
 
 /* Search field */
 .vector-search-box-input,
-.cdx-text-input__input {
+.cdx-text-input__input:enabled {
 	color: var(--main-text);
 	background-color: var(--main-bg);
 	border-color: var(--main-border) !important;
 	box-shadow: none !important;
+}
+
+/* Search button */
+.cdx-button:enabled, .cdx-button.cdx-button--fake-button--enabled {
+  background-color: var(--box-bg) !important;
+  color: var(--main-text) !important;
+  border-color: var(--box-border) !important;
 }
 
 /* Main menu, TOC */
@@ -209,6 +225,36 @@ input[type="checkbox"]:hover + .mw-ui-button.mw-ui-progressive.mw-ui-quiet,
 	background: none;
 }
 
+/* Language chooser drop-down menu */
+.skin-vector .uls-menu {
+	border-color: var(--box-border) !important;
+}
+
+.skin-vector .uls-filtersuggestion {
+	color: var(--main-text) !important;
+}
+
+.uls-menu .uls-search {
+	background-color: var(--box-bg) !important;
+}
+
+.uls-search-label {
+	filter: invert(1);
+}
+
+.uls-filtersuggestion {
+	background-color: var(--box-bg) !important;
+}
+
+.uls-lcd {
+	background-color: var(--box-bg) !important;
+}
+
+#uls-settings-block.uls-settings-block--vector-2022.uls-settings-block--with-add-languages {
+  background-color: var(--box-bg) !important;
+  border-top: var(--box-border) !important;
+}
+
 /* Main content */
 .mw-page-container-inner {
 	column-gap: 0 !important;
@@ -270,6 +316,7 @@ h1, h2, h3, h4, h5, h6 {
 .infobox th.infobox-header,
 .navbox .navbox-group,
 .sidebar-heading {
+	color: var(--nav-text) !important;
 	background-color: var(--box-head-bg) !important;
 }
 
@@ -297,7 +344,7 @@ img.noprint,
 .vector-icon,
 .vector-menu-checkbox::after,
 .vector-dropdown > .vector-menu-heading::after {
-	filter: hue-rotate(-35deg);
+	filter: invert(0.6);
 }
 
 html.dark img.noprint,
@@ -331,20 +378,69 @@ html.dark .searchButton {
 	display: none !important;
 }
 
-	`);
-});
+/* Code snippets */
+@media screen {
+  pre, code, .mw-code {
+    background-color: var(--code-bg);
+    color: var(--box-text);
+    border: 1px solid #eaecf0;
+  }
+}
 
-document.addEventListener('keydown', function(e) {
-	if (e.key == 'F8') {
-		e.preventDefault();
-		GM_setValue('darkMode', !GM_getValue('darkMode') || false);
-		darkMode();
-	}
-});
+/* Figures (File/Thumb, File/Frame) */
+@media screen {
+  figure[typeof~="mw:File/Thumb"], figure[typeof~="mw:File/Frame"] {
+    border: 1px solid var(--box-border);
+    background-color: var(--box-bg2);
+  }
+}
+
+/* Figure caption */
+@media screen {
+  figure[typeof~="mw:File/Thumb"] > figcaption, figure[typeof~="mw:File/Frame"] > figcaption {
+    border: 1px solid var(--box-border);
+    background-color: var(--box-bg);
+  }
+}
+
+/* Ambox */
+.mw-parser-output .ambox {
+  border: 1px solid var(--box-border) !important;
+  background-color: var(--box-bg) !important;
+}
+
+/* Talk tab */
+.mw-parser-output .wpbs .wpb-header {
+	background-color: var(--box-bg) !important;
+}
+
+.mw-parser-output .wpbs .banner-shell-inner {
+  background: var(--box-bg) !important;
+}
+
+/* Fix to darker SVG's on tables (might mess up some icons, but the content itself should be okay) */
+@media screen {
+  td .mw-file-element {
+    filter: invert(1);
+  }
+}
+
+/* Math symbols */
+.mwe-math-element {
+	filter: invert(1);
+}
+`)
+})
+
+document.addEventListener("keydown", function (e) {
+  if (e.key == "F8") {
+    e.preventDefault()
+    GM_setValue("darkMode", !GM_getValue("darkMode") || false)
+    darkMode()
+  }
+})
 
 function darkMode() {
-	if (GM_getValue('darkMode'))
-		document.documentElement.classList.add('dark');
-	else
-		document.documentElement.classList.remove('dark');
+  if (GM_getValue("darkMode")) document.documentElement.classList.add("dark")
+  else document.documentElement.classList.remove("dark")
 }
