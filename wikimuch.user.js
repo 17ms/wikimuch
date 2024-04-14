@@ -329,7 +329,8 @@ h1, h2, h3, h4, h5, h6 {
 .infobox th.infobox-above,
 .infobox th.infobox-header,
 .navbox .navbox-group,
-.sidebar-heading {
+.sidebar-heading,
+.sidebar {
 	color: var(--nav-text) !important;
 	background-color: var(--box-head-bg) !important;
 }
@@ -440,9 +441,18 @@ html.dark .searchButton {
   }
 }
 
+/* Popup containers (with descriptions of the linked topic) */
+.mwe-popups-container, .mwe-popups {
+  background-color: var(--box-bg) !important;
+}
+
 /* Math symbols */
 .mwe-math-element {
 	filter: invert(1);
+}
+
+.equation-box {
+  background-color: var(--box-bg) !important;
 }
 `)
 })
