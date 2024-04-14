@@ -14,12 +14,12 @@
 // @run-at      document-start
 // ==/UserScript==
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (document.body.classList.contains("skin-vector-legacy"))
-    document.location.search += "&useskin=vector-2022"
+document.addEventListener("DOMContentLoaded", function() {
+    //if (document.body.classList.contains("skin-vector-legacy"))
+    //  document.location.search += "&useskin=vector-2022"
 
-  darkMode()
-  GM_addStyle(`
+    darkMode()
+    GM_addStyle(`
 /* Light theme */
 :root {
 	--nav-bg:        				 #f1f1f1;
@@ -93,6 +93,10 @@ a:hover,
 .vector-feature-zebra-design-disabled .vector-header-container {
 	max-width: 100%;
 	padding: 0;
+}
+
+#mw-head {
+  background-color: var(--background-color-base);
 }
 
 #vector-main-menu-dropdown {
@@ -171,6 +175,16 @@ body.mw-special-Search main {
 .vector-toc .vector-toc-level-1-active:not(.vector-toc-list-item-expanded) > .vector-toc-link .vector-toc-text,
 .vector-toc .vector-toc-list-item-active.vector-toc-level-1-active > .vector-toc-link .vector-toc-text {
 	width: 100%;
+}
+
+/* TOC */
+.toc, .toccolours {
+  background-color: var(--box-bg);
+}
+
+/* TOC text */
+.tocnumber {
+  color: var(--main-text);
 }
 
 body.vector-toc-pinned .mw-ui-icon-flush-left,
@@ -420,7 +434,7 @@ html.dark .searchButton {
 
 /* Fix to darker SVG's on tables (might mess up some icons, but the content itself should be okay) */
 @media screen {
-	.infobox-full-data .mw-file-element,
+  .infobox-full-data .mw-file-element,
   .wikitable .mw-file-element {
     filter: invert(1);
   }
@@ -433,15 +447,15 @@ html.dark .searchButton {
 `)
 })
 
-document.addEventListener("keydown", function (e) {
-  if (e.key == "F8") {
-    e.preventDefault()
-    GM_setValue("darkMode", !GM_getValue("darkMode") || false)
-    darkMode()
-  }
+document.addEventListener("keydown", function(e) {
+    if (e.key == "F8") {
+        e.preventDefault()
+        GM_setValue("darkMode", !GM_getValue("darkMode") || false)
+        darkMode()
+    }
 })
 
 function darkMode() {
-  if (GM_getValue("darkMode")) document.documentElement.classList.add("dark")
-  else document.documentElement.classList.remove("dark")
+    if (GM_getValue("darkMode")) document.documentElement.classList.add("dark")
+    else document.documentElement.classList.remove("dark")
 }
