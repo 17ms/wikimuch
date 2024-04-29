@@ -320,6 +320,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbox-image,
 .navbox-list,
 .mw-parser-output tr + tr > .navbox-group {
+	background-color: var(--box-bg) !important;
 	border-color: var(--navbox-border) !important;
 }
 
